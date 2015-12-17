@@ -1,0 +1,9 @@
+[Unit]
+Description=The Buildbot Master
+
+[Service]
+User=buildbot
+ExecStart=/srv/buildbot/venv/bin/buildbot start --nodaemon /srv/buildbot/master
+
+[Install]
+WantedBy=multi-user.target

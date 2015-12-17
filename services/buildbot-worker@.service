@@ -1,0 +1,9 @@
+[Unit]
+Description=The Buildbot Worker for the %I architecture
+
+[Service]
+User=buildbot
+ExecStart=/srv/buildbot/venv/bin/buildslave start --nodaemon /srv/buildbot/slave-%I
+
+[Install]
+WantedBy=multi-user.target
