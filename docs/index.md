@@ -7,5 +7,5 @@ This setup allows us to publish
 
 The following pages document how it all works:
 
-# [Buildbot](buildbot.md)
-# [Debian Packaging](debian-packaging.md)
+1. [Buildbot](buildbot.md)
+2. [Debian Packaging](debian-packaging.md)
