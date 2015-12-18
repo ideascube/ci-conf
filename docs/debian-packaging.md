@@ -21,7 +21,7 @@ here and there. You must replace them by their actual values. For example, the
 A few things need to be installed before we start:
 
 ```
-# apt install sbuild dh-virtualenv
+# apt install sbuild dh-virtualenv dput
 ```
 
 The [buildbot](buildbot.md) user needs to be a sudoer for certain commands, so
@@ -70,7 +70,51 @@ If the `sbuild` command finished successfully, you'll find an
 tree. You can remove the git tree as well as the build artefacts, they are not
 necessary any more.
 
+### Configuring dput
+
+Once packages are built on the worker, we need to upload them to the master
+and update the repository.
+
+Debian provides the `dput` and `mini-dinstall` commands which work together to
+fulfil that purpose.
+
+On the workers, we want to use `dput` to upload the built packages to the
+master, and request that `mini-dinstall` be ran there to update the
+repository.
+
+To that end, install the `debian/dot_dput.cf` file provided in this
+repository, as `~/.dput.cf` in the `buildbot` user's home.
+
 ## On the master machine
+
+### Pre-requisites
+
+A few things need to be installed before we start:
+
+```
+# apt install mini-dinstall
+```
+
+Finally, there are a couple of directories to create:
+
+```
+# mkdir -p /srv/repos/debian/mini-dinstall/incoming
+# chown -R buildbot:www-data /srv/repos
+# chmod -R g+s /srv/repos
+
+### Configuring mini-dinstall
+
+Once packages are built on the worker, we need to upload them to the master
+and update the repository.
+
+Debian provides the `dput` and `mini-dinstall` commands which work together to
+fulfil that purpose.
+
+On the master, we want to use `mini-dinstall` to update the repository after
+the worker has uploaded the built packages with `dput`.
+
+To that end, install the `debian/dot_mini-dinstall.conf` file provided in this
+repository, as `~/.mini-dinstall.conf` in the `buildbot` user's home.
 
 ### Configuring the Buildbot master
 
@@ -85,8 +129,11 @@ $arch_pkg_factory.addStep(steps.Git(
     mode='incremental', branch='master'))
 $arch_pkg_factory.addStep(steps.ShellCommand(
     command=['sudo', 'sbuild-update', '-udcar', 'jessie-$arch-sbuild']))
-$arch_pkg_factory.addStep(steps.ShellCommand(
+$arch_pkg_factory.addStep(steps.SetPropertyFromCommand(
+    extract_fn=get_changes_file('$arch'),
     command=['sbuild', '-s', '-d', 'jessie', '--arch', '$arch']))
+$arch_pkg_factory.addStep(steps.ShellCommand(
+    command=['dput', 'local', util.Interpolate('%(prop:workdir)s/%(prop:changes_file)s')]))
 
 c['builders'] = [
     util.BuilderConfig(
@@ -99,3 +146,20 @@ c['builders'] = [
 In the snippet above, `$arch` represents the architecture of the worker
 machine. There must be one `$arch_pkg_factory` and `BuilderConfig` for each
 worker architecture.
+
+### Serving the repository with nginx
+
+To make the Debian repository publicly accessible, we use nginx to serve the
+static content.
+
+You can install the `nginx/repos` file provided in this repository, in the
+`/etc/nginx/sites-available/` directory, then enable it:
+
+```
+# ln -s /etc/nginx/sites-{available,enabled}/repos
+```
+
+Restart or reload nginx so it takes into account the new configuration.
+
+At this point, the package repository is available at
+[http://repos.ideas-box.org/debian](http://repos.ideas-box.org/debian).

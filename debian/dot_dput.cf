@@ -1,0 +1,6 @@
+[local]
+fqdn = localhost
+method = local
+incoming = /srv/repos/debian/mini-dinstall/incoming
+allow_unsigned_uploads = 1
+post_upload_command = mini-dinstall --batch

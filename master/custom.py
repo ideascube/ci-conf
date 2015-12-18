@@ -4,6 +4,7 @@
 
 
 from datetime import datetime
+from glob import glob
 
 from buildbot.status.web.hooks.github import GitHubEventHandler
 
@@ -29,3 +30,23 @@ class GithubCreateEventHandler(GitHubEventHandler):
         }
 
         return [change], 'git'
+
+
+def get_changes_file(arch):
+    def getter(rc, stdout, stderr):
+        if rc != 0:
+            return
+
+        for line in stdout.split('\n'):
+            if not line.startswith('dpkg-source: info: '):
+                continue
+
+            if not line.endswith('.dsc'):
+                continue
+
+            dsc_file = line.rsplit(' ', 1)[-1]
+            changes_file = '%s_%s.changes' % (dsc_file[:-4], arch)
+
+            return {'changes_file': changes_file}
+
+    return getter
