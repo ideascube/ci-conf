@@ -144,7 +144,7 @@ First, the project identity:
 ```
 c['title'] = 'Ideascube'
 c['titleURL'] = 'https://github.com/ideascube'
-c['buildbotURL'] = 'http://buildbot.ideas-box.fr/'
+c['buildbotURL'] = 'http://buildbot.ideascube.org/'
 ```
 
 Next, let the master know about the workers:
@@ -269,4 +269,4 @@ You can install the `nginx/buildbot` file provided in this repository, in the
 Restart or reload nginx so it takes into account the new configuration.
 
 At this point, the Buildbot web application is responding on
-[http://buildbot.ideas-box.org](http://buildbot.ideas-box.org).
+[http://buildbot.ideascube.org](http://buildbot.ideascube.org).
