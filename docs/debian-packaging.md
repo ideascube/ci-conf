@@ -162,4 +162,4 @@ You can install the `nginx/repos` file provided in this repository, in the
 Restart or reload nginx so it takes into account the new configuration.
 
 At this point, the package repository is available at
-[http://repos.ideas-box.org/debian](http://repos.ideas-box.org/debian).
+[http://repos.ideascube.org/debian](http://repos.ideascube.org/debian).
