@@ -21,7 +21,7 @@ here and there. You must replace them by their actual values. For example, the
 A few things need to be installed before we start:
 
 ```
-# apt install sbuild dh-virtualenv dput
+# apt install sbuild debootstrap debhelper dh-virtualenv dput python3-setuptools
 ```
 
 The [buildbot](buildbot.md) user needs to be a sudoer for certain commands, so
