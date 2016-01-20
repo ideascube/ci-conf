@@ -33,7 +33,6 @@ It is also necessary to create a new user which will run Buildbot:
 
 ```
 # useradd -c "Buildbot user" -d /srv/buildbot -m -s /bin/bash buildbot
-# passwd buildbot
 ```
 
 ### Deploying the Buildbot worker
