@@ -3,7 +3,7 @@ Description=The Buildbot Worker for the %I architecture
 
 [Service]
 User=buildbot
-ExecStart=/srv/buildbot/venv/bin/buildslave start --nodaemon /srv/buildbot/slave-%I
+ExecStart=/srv/buildbot/venv/bin/buildslave start --nodaemon /srv/buildbot/worker-%I
 
 [Install]
 WantedBy=multi-user.target

@@ -53,7 +53,7 @@ $ pip install "buildbot-slave==0.8.12"
 Next, create the worker:
 
 ```
-$ buildslave create-slave -r slave-$arch $master_host:master_port slave-$arch $password
+$ buildslave create-slave -r worker-$arch $master_host:$master_port worker-$arch $password
 ```
 
 In the above command, some variables are important to explain:
@@ -67,7 +67,7 @@ In the above command, some variables are important to explain:
 * `password` is the password for this worker to authenticate with the master.
     Remember it, you will need to specify it in the master's configuration.
 
-Next, edit the `slave-$arch/info/admin` and `slave-$arch/info/host` files.
+Next, edit the `worker-$arch/info/admin` and `worker-$arch/info/host` files.
 
 Finally, install the `buildbot-worker@.service` file provided in this
 repository, in the `/etc/systemd/system/` folder.
@@ -150,7 +150,7 @@ Next, let the master know about the workers:
 
 ```
 c['slaves'] = [
-    buildslave.BuildSlave('slave-$arch', '$password'),
+    buildslave.BuildSlave('worker-$arch', '$password'),
     ]
 ```
 

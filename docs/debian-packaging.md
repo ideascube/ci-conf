@@ -138,7 +138,7 @@ $arch_pkg_factory.addStep(steps.ShellCommand(
 c['builders'] = [
     util.BuilderConfig(
         name='build-$arch-pkg',
-        slavenames=['slave-$arch'],
+        slavenames=['worker-$arch'],
         factory=$arch_pkg_factory),
     ]
 ```
