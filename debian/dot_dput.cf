@@ -4,3 +4,12 @@ method = local
 incoming = /srv/repos/debian/mini-dinstall/incoming
 allow_unsigned_uploads = 1
 post_upload_command = mini-dinstall --batch
+
+[remote]
+fqdn = buildbot.vpn
+method = scp
+ssh_config_options =
+  Port 443
+login = buildbot
+incoming = /srv/repos/debian/mini-dinstall/incoming
+post_upload_command = ssh -p 443 buildbot@buildbot.vpn mini-dinstall --batch

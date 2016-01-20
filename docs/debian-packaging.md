@@ -85,6 +85,10 @@ repository.
 To that end, install the `debian/dot_dput.cf` file provided in this
 repository, as `~/.dput.cf` in the `buildbot` user's home.
 
+If the worker is not the same host as the master, then the `buildbot` user on
+the worker needs to be able to connect through SSH as the `buildbot` user on
+the master, without a password.
+
 ## On the master machine
 
 ### Pre-requisites
@@ -133,7 +137,7 @@ $arch_pkg_factory.addStep(steps.SetPropertyFromCommand(
     extract_fn=get_changes_file('$arch'),
     command=['sbuild', '-s', '-d', 'jessie', '--arch', '$arch']))
 $arch_pkg_factory.addStep(steps.ShellCommand(
-    command=['dput', 'local', util.Interpolate('%(prop:workdir)s/%(prop:changes_file)s')]))
+    command=['dput', '$target', util.Interpolate('%(prop:workdir)s/%(prop:changes_file)s')]))
 
 c['builders'] = [
     util.BuilderConfig(
@@ -146,6 +150,11 @@ c['builders'] = [
 In the snippet above, `$arch` represents the architecture of the worker
 machine. There must be one `$arch_pkg_factory` and `BuilderConfig` for each
 worker architecture.
+
+Also, the `$target` variable should be one of:
+
+* `local` if the worker is on the same host as the master;
+* `remote` if the worker is on a different system from the master.
 
 ### Serving the repository with nginx
 
