@@ -17,9 +17,10 @@ here and there. You must replace them by their actual values. For example, the
 
 ## Deploying a worker machine
 
-We currently have only one worker machine:
+We currently have two worker machines:
 
 * an `amd64` machine (which also runs the master)
+* an `armhf` machine
 
 ### Pre-requisites
 
