@@ -27,7 +27,7 @@ We currently have two worker machines:
 A few things need to be installed before we start:
 
 ```
-# apt install virtualenv git
+# apt install virtualenv git gcc python-dev
 ```
 
 It is also necessary to create a new user which will run Buildbot:
