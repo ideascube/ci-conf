@@ -52,7 +52,7 @@ A few things are needed in order to get a working sbuild deployment:
     --arch=$arch \
     jessie \
     /srv/chroot/jessie-$arch \
-    http://httpredir.debian.org/debian
+    http://ftp.fr.debian.org/debian
 ```
 
 At this point, you should have a functional `sbuild`. You could test it by
