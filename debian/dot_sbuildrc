@@ -1,0 +1,3 @@
+# Run lintian for quality check
+$run_lintian = 1;
+$lintian_opts = ['-i', '-I'];

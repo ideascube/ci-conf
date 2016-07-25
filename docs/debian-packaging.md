@@ -70,6 +70,11 @@ If the `sbuild` command finished successfully, you'll find an
 tree. You can remove the git tree as well as the build artefacts, they are not
 necessary any more.
 
+One last thing to do is add some local `sbuild` configuration.
+
+To do so, install the `debian/dot_sbuildrc` file provided in this repository,
+as `~/.sbuildrc` in the `buildbot` user's home.
+
 ### Configuring dput
 
 Once packages are built on the worker, we need to upload them to the master
