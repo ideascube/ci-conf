@@ -12,7 +12,7 @@ so it seems like a good idea to do the same.
 **Note:** When following this documentation, you will find a few variables
 here and there. You must replace them by their actual values. For example, the
 `$arch` variable appears several times, and must be replaced by something like
-`amd64` or `armhf`, depending on the actual architecture of the worker.
+`amd64`, `armhf` or `i386`, depending on the actual architecture of the worker.
 
 ## On each worker machine
 
