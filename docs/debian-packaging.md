@@ -12,7 +12,7 @@ so it seems like a good idea to do the same.
 **Note:** When following this documentation, you will find a few variables
 here and there. You must replace them by their actual values. For example, the
 `$arch` variable appears several times, and must be replaced by something like
-`amd64` or `armhf`, depending on the actual architecture of the worker.
+`amd64`, `armhf` or `i386`, depending on the actual architecture of the worker.
 
 ## On each worker machine
 
@@ -128,38 +128,7 @@ repository, as `~/.mini-dinstall.conf` in the `buildbot` user's home.
 ### Configuring the Buildbot master
 
 You must configure the master to run package building tasks. The
-`master/master.cfg` included in this repository already does that, but let's
-explain the config a bit:
-
-```
-$arch_pkg_factory = util.BuildFactory()
-$arch_pkg_factory.addStep(steps.Git(
-    repourl='https://github.com/ideascube/ideascube.git',
-    mode='incremental', branch='master'))
-$arch_pkg_factory.addStep(steps.ShellCommand(
-    command=['sudo', 'sbuild-update', '-udcar', 'jessie-$arch-sbuild']))
-$arch_pkg_factory.addStep(steps.SetPropertyFromCommand(
-    extract_fn=get_changes_file('$arch'),
-    command=['sbuild', '-s', '-d', 'jessie', '--arch', '$arch']))
-$arch_pkg_factory.addStep(steps.ShellCommand(
-    command=['dput', '$target', util.Interpolate('%(prop:workdir)s/%(prop:changes_file)s')]))
-
-c['builders'] = [
-    util.BuilderConfig(
-        name='build-$arch-pkg',
-        slavenames=['worker-$arch'],
-        factory=$arch_pkg_factory),
-    ]
-```
-
-In the snippet above, `$arch` represents the architecture of the worker
-machine. There must be one `$arch_pkg_factory` and `BuilderConfig` for each
-worker architecture.
-
-Also, the `$target` variable should be one of:
-
-* `local` if the worker is on the same host as the master;
-* `remote` if the worker is on a different system from the master.
+`master/master.cfg` included in this repository does just that.
 
 ### Serving the repository with nginx
 

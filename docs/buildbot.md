@@ -13,13 +13,14 @@ The rest of this documentation is structured in a way that reflects this.
 **Note:** When following this documentation, you will find a few variables
 here and there. You must replace them by their actual values. For example, the
 `$arch` variable appears several times, and must be replaced by something like
-`amd64` or `armhf`, depending on the actual architecture of the worker.
+`amd64`, `armhf` or `i386`, depending on the actual architecture of the worker.
 
 ## Deploying a worker machine
 
 We currently have two worker machines:
 
-* an `amd64` machine (which also runs the master)
+* an `amd64` machine, which builds for both the amd64 and i386 architectures
+  (and also runs the master)
 * an `armhf` machine
 
 ### Pre-requisites
